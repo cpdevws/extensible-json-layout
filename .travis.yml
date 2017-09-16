@@ -6,6 +6,5 @@ script:
 - gradle test
 - gradle build
 before_install:
-- openssl aes-256-cbc -K $encrypted_2da4ade36305_key -iv $encrypted_2da4ade36305_iv
-  -in secrets.tar.enc -out secrets.tar -d
+- openssl aes-256-cbc -K $encrypted_9d8ead8261df_key -iv $encrypted_9d8ead8261df_iv -in secrets.tar.enc -out secrets.tar -d
 - tar xvf secrets.tar
