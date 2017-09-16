@@ -1,0 +1,124 @@
+group 'org.crosslibs'
+
+buildscript {
+
+    ext {
+        log4j2Version = '2.9.0'
+        jacksonVersion = '2.9.1'
+        junitVersion = '4.12'
+    }
+
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.crosslibs:semver:1.0.1'
+        classpath 'org.crosslibs:version-plugin:1.0.1'
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'jacoco'
+apply plugin: 'maven'
+apply plugin: 'version'
+apply plugin: 'signing'
+
+sourceCompatibility = 1.8
+
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        html.enabled true
+    }
+}
+
+jar {
+    baseName = project.name
+}
+
+javadoc {
+    source = sourceSets.main.allJava
+    title = "Extensible Log4j2 JSON Layout"
+}
+
+task sources(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+    from sourceSets.main.output
+}
+
+task docs(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sources
+    archives docs
+    archives jar
+}
+
+test {
+    finalizedBy jacocoTestReport
+}
+
+signing {
+    configurations.archives
+}
+
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            pom.project {
+                name 'Extensible Log4j2 JSON Layout'
+                packaging 'jar'
+                description 'Extend Log4j2 JSON layout with custom fields'
+                url 'https://github.com/cpdevws/extensible-json-layout'
+
+                scm {
+                    connection 'scm:git:git://github.com/cpdevws/extensible-json-layout.git'
+                    developerConnection 'scm:git:ssh://github.com:cpdevws/extensible-json-layout.git'
+                    url 'https://github.com/cpdevws/extensible-json-layout/tree/master'
+                }
+
+                licenses {
+                    license {
+                        name 'MIT License'
+                        url 'http://www.opensource.org/licenses/mit-license.php'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'cpdevws'
+                        name 'Chaitanya Prakash N'
+                        email 'cpdevws@gmail.com'
+                    }
+                }
+            }
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "org.apache.logging.log4j:log4j:${log4j2Version}"
+    compile "org.apache.logging.log4j:log4j-api:${log4j2Version}"
+    compile "org.apache.logging.log4j:log4j-core:${log4j2Version}"
+    compile "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
+    testCompile "junit:junit:${junitVersion}"
+}

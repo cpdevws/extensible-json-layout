@@ -1,0 +1,7 @@
+.gradle
+.idea
+out
+build
+**/.DS_Store
+**/*.ini
+**/gradle.properties
