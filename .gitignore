@@ -6,3 +6,5 @@ build
 **/*.ini
 **/gradle.properties
 **/*.gpg
+**/secrets.tar
+

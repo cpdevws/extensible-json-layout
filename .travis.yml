@@ -7,6 +7,5 @@ script:
 - gradle build
 before_install:
 - openssl aes-256-cbc -K $encrypted_2da4ade36305_key -iv $encrypted_2da4ade36305_iv
-  -in cpdevws.gpg.enc -out cpdevws.gpg -d
-- openssl aes-256-cbc -K $encrypted_2da4ade36305_key -iv $encrypted_2da4ade36305_iv
-  -in gradle.properties.enc -out gradle.properties -d
+  -in secrets.tar.enc -out secrets.tar -d
+- tar xvf secrets.tar
