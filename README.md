@@ -1,5 +1,7 @@
-# extensible-json-layout
-Extensible Log4j2 JSON Layout provides the ability to add custom attributes to the JSON logs.
+# Extensible Log4j2 Json Layout
+[![Build Status](https://travis-ci.org/cpdevws/extensible-json-layout.svg?branch=master)](https://travis-ci.org/cpdevws/extensible-json-layout)
+
+Extensible Log4j2 JSON Layout (`extensible-json-layout`) provides the ability to add custom attributes to the JSON logs.
 
 ## How to use
 In your `log4j2` configuration file (`log4j2.xml`, `log4j2.yml`, `log4j2.yaml` or `log4j2.json`), please use `ExtensibleJsonLayout` instead of `JsonLayout`. Please note that all configuration properties of `JsonLayout` are supported by `ExtensibleJsonLayout`.
