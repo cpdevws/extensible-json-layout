@@ -5,6 +5,7 @@ notifications:
 script:
 - gradle test
 - gradle build
+- gradle uploadArchives
 before_install:
 - openssl aes-256-cbc -K $encrypted_9d8ead8261df_key -iv $encrypted_9d8ead8261df_iv -in secrets.tar.enc -out secrets.tar -d
 - tar xvf secrets.tar
