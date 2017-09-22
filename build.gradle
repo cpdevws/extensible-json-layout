@@ -22,7 +22,6 @@ apply plugin: 'jacoco'
 apply plugin: 'maven'
 apply plugin: 'version'
 apply plugin: 'signing'
-apply plugin: 'maven-publish'
 
 sourceCompatibility = 1.8
 
@@ -64,7 +63,7 @@ test {
 }
 
 signing {
-    configurations.archives
+    sign configurations.archives
 }
 
 uploadArchives {
